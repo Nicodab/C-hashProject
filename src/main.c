@@ -51,8 +51,8 @@ int main(int argc, char *argv[]) {
 
         BinaryTree* tree = loadTable(argv[2]); // A CHANGER pour le chemin spécifié par le user
         if (tree == NULL) {
-            fprintf(stderr, "Erreur d'allocation de mémoire pour le Balanced tree\n");
-            printf("Erreur d'allocation de mémoire pour le Balanced tree\n");
+            fprintf(stderr, "Erreur d'allocation de mémoire pour l'arbre binaire\n");
+            printf("Erreur d'allocation de mémoire pour l'arbre binaire\n");
             exit(EXIT_FAILURE);
         }
         // Enregistrez l'heure de fin
@@ -62,11 +62,6 @@ int main(int argc, char *argv[]) {
 
         printf("Temps de chargement de la T3C : %f secondes\n", temps);
         BinaryTree* balancedTree;
-        if (balancedTree == NULL) {
-            fprintf(stderr, "Erreur d'allocation de mémoire pour le Balanced tree\n");
-            printf("Erreur d'allocation de mémoire pour le Balanced tree\n");
-            exit(EXIT_FAILURE);
-        }
         printf("After loading the table\n");
         //Si le user veut équilibrer l'arbre
         //printf("nb arg: %d\n", strlen(argv));
