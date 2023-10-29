@@ -25,7 +25,7 @@ La compilation ayant déjà été un succès, vous trouverez le fichier exécuta
 Mode G: génération de la table de correspondance chaînes-condensats.  
 Depuis un fichier texte *inputFile* contenant des chaînes de caractères, une table de correspondance (T3C) *outputFile* sera crée avec ":" comme séparateur.
 ```bash
-  ./finalproject -G <inputFile> -o <outputFile> --algo sh256
+  ./finalproject -G <inputFile> -o <outputFile> --algo sha256
 ```
 Remarque: On peut spécifier "sha256" ou bien "md5" après l'option --algo. L'application ne supporte que l'algorithme de hashage sha256 et md5. 
 
