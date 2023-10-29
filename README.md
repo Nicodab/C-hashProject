@@ -8,8 +8,8 @@ Pré-requis:
 ### Récupérer le projet
 Cette étape permet de de récupérer le projet C de table de correspondance chaînes-condensats codé en C.
 ```bash
-  git clone https://github.com/Nicodab/Project_C.git
-  cd Project_C
+  git clone https://github.com/Nicodab/C-hashProject.git
+  cd C-hashProjec
 ```
 Remarque: une fois dans dossier du projet à la racine, nous avons un Dockerfile qui va nous servir à construire l'image docker contenant toutes les librairies et fichiers source necéssaire de mon projet pour faire tourner l'application dans un conteneur.
 ### Construction de l'image Docker
