@@ -2,7 +2,7 @@
 
 Pré-requis:
 - OS: Linux
-- Installer Docker > v20.0.3
+- Installer Docker >= v20.10.X
 
 ------
 ### Récupérer le projet
