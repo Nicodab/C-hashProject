@@ -16,28 +16,9 @@ BinaryTree* loadTable(const char* filename) {
     char line[MAX_LINE_LENGTH];
     char* token;
 
-    printf("On s'apprête à lire le fichier %s\n", filename);
-    // ATTENTION, c'est à nous de gérer nous meme dans la lecture du fichier rockyou.txt les saut de ligne ou bien les "::::::passwordjzddeioed"
-    // bien regardé qd y'a plusieurs ::: ou des espaces ou meme un seul espace ou un seul :
-    // réfléchir à comment parser ça ? peut etre avec un regex
+    printf("Lecture du fichier %s...\n", filename);
     // Parcourir le fichier ligne par ligne
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
-        //printf("line: %s\n", line); // --> <<<<<ATTENTION>>>>> Segmentation fault (core dumped)
-        // Diviser la ligne en chaîne et condensat
-        // -> token devient la sous-chaine jusqu'à rencontrer ":"
-        // -> un pointeur continue alors de pointer la où il s'est arrêté dans le string 'line'  
-        /*token = strtok(line, ":"); 
-        //token = 
-        char* str = token; // On a le mot en claire
-        // -> Token devient la sous-chaine jusqu'à rencontrer "\n" et donc la fin de la ligne lue ds le fichier(initialement la variable 'line')
-        // -> Le pointeur de la fonction strtok appelé précédemment pointe toujours à l'endroit où il s'est arreté
-        // -> Comme on spécifie strtok(NULL,'\n'), cet appel repartira depuis là où il s'est arreté
-        // -> Donc si on avait mis un autre str à la pace de NULL, le pointeur aurait été remis à jour en pointant au début du str qu'on aurait passé en 1ere argument      
-        printf("mot récupéré: %s\n",str);
-        token = strtok(NULL, "\n");
-        char* hash = token; // On a le hash du mot
-
-        printf("hash récupéré: %s\n",token);*/
         // Insérer la paire chaîne-condensat dans l'arbre
         char *dernierSeparateur = strrchr(line, ':');
 
@@ -56,23 +37,22 @@ BinaryTree* loadTable(const char* filename) {
             printf("Erreur: Aucun separateur ':' n'a été trouvé dans ligne '%s'.\n", line);
         }
     }
-    printf("On s'apprête à fermer le fichier %s\n", filename);
+    printf("Fermeture du fichier %s\n", filename);
     fclose(file);
     return tree;
 }
 
 // Recherche du condensat dans l'arbre binaire
 void lookupString(const BinaryTree* tree, const char* hash) {
-    printf("targetHash before calling recursive find(): %s\n", hash);
     // Variables pour mesurer le temps
     clock_t debut, fin;
     double temps;
-    // Enregistrez l'heure de début
+    // Heure de début
     debut = clock();
     const char* result = find(tree, hash);
-    // Enregistrez l'heure de fin
+    // Heure de fin
     fin = clock();
-    // Calculez le temps écoulé en secondes
+    // Calcul du temps écoulé en secondes
     temps = (double)(fin - debut) / CLOCKS_PER_SEC;
 
     printf("Temps de recherche: %f secondes\n", temps);
@@ -103,18 +83,18 @@ const char* find(const BinaryTree* root, const char* targetHash) {
 //Insertion à gauche des hash les + faibles et à droite de ceux les plus forts.
 // Comme ça on peut le parcourir ensuite + simplement de gauche à droite pour avoir les hash triés dans l'ordre
 BinaryTree* insert(BinaryTree* root, const char* str, const char* hash) {
-    // Si l'arbre est vide, créez un nouveau nœud et retournez-le comme nouvelle racine
+    // Si l'arbre est vide, on créer un nouveau noeud on le retourne comme nouvelle racine
     if (root == NULL) {
         BinaryTree* newNode = (BinaryTree*)malloc(sizeof(BinaryTree));
         newNode->str = strdup(str);
         newNode->hash = strdup(hash);
-        newNode->hash[64] = '\0'; // On remet la taille à 63 octets pour que lestrcmpse fasse correctement avec les hash lues en stdin.
+        newNode->hash[64] = '\0'; // On remet la taille à 63 octets pour que le strcmp se fasse correctement avec les hash lues en stdin.
         newNode->left = NULL;
         newNode->right = NULL;
         return newNode;
     }
 
-    // Sinon, récursivement insérez dans le sous-arbre gauche ou droit
+    // Sinon, récursivement on insère dans le sous-arbre gauche ou droit
     if (strcmp(hash, root->hash) < 0) {
         root->left = insert(root->left, str, hash);
     } else if (strcmp(hash, root->hash) > 0) {
@@ -125,7 +105,7 @@ BinaryTree* insert(BinaryTree* root, const char* str, const char* hash) {
     return root;
 }
 
-// Fonction pour compter le nombre de nœuds dans l'arbre.
+// Compter le nombre de noeuds dans l'arbre.
 int countNodes(BinaryTree *tree) {
     if (tree == NULL) {
         return 0;
@@ -150,7 +130,7 @@ void storeInorder(BinaryTree *tree, char **condensats, char **chaines, int *inde
     // Parcours ensuite le sous-arbre droit.
     storeInorder(tree->right, condensats, chaines, index);
 }
-
+// Création de noeud pour les insérer dans l'arbre binaire
 BinaryTree* createNode(const char* str, const char* hash) {
     BinaryTree* newNode = (BinaryTree*)malloc(sizeof(BinaryTree));
     if (newNode == NULL) {
@@ -165,7 +145,7 @@ BinaryTree* createNode(const char* str, const char* hash) {
 }
 
 
-// Fonction pour construire un arbre binaire trié à partir d'un tableau trié.
+// Fonction de construction de arbre binaire équilibré (trié à partir d'un tableau trié).
 BinaryTree* buildBalancedTree(char** condensats, char** chaines, int start, int end) {
     if (start > end) {
         return NULL;
@@ -173,7 +153,7 @@ BinaryTree* buildBalancedTree(char** condensats, char** chaines, int start, int 
     // On prend l'index à la moitié entre 0 et la taille de condensats - 1
     int middle = (start + end) / 2;
     
-    // Crée un nouveau noeud avec le condensat au milieu.
+    // Création d'un nouveau noeud avec le condensat au milieu.
     BinaryTree* root = createNode(chaines[middle], condensats[middle]);
     
     // Construit le sous-arbre gauche à partir de la première moitié du tableau.
@@ -189,7 +169,7 @@ BinaryTree* buildBalancedTree(char** condensats, char** chaines, int start, int 
 // Fonction pour trier un arbre binaire.
 BinaryTree *sortBinaryTree(BinaryTree *tree) {
     int nodeCount = countNodes(tree);
-    printf("Number of nodes: %d\n", nodeCount);
+    printf("Nombre de noeuds: %d\n", nodeCount);
     char **condensats = malloc(nodeCount * sizeof(char *));
     char **chaines = malloc(nodeCount * sizeof(char *));
     int index = 0;

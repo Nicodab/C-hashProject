@@ -13,21 +13,20 @@
 void computeSHA256(const char *input, char *output) {
     unsigned char hash[SHA256_DIGEST_LENGTH];
     SHA256_CTX sha256; // Déclaration de la structure de contexte --> Utilisé pour calculer le hash 
-    SHA256_Init(&sha256);// Initialisation de la structure de contexte
+    SHA256_Init(&sha256); // Initialisation de la structure de contexte
     SHA256_Update(&sha256, input, strlen(input)); // maj du contexte sha256 par le calcul du hash de input
     int sha_finale = SHA256_Final(hash, &sha256); // stockage du résultat dans le tableau 'hash' déclaré plus haut
 
     for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
         // On place dans output la représentation hexa de chaque octet contenu dans hash (après le calcul de hash)
         // output + (i*2) signifie que l'on déplace la position d'ajout des carctères de la chaînes hash.
-        // Ici on place chaque octet lu dans output, sauf que cahcun de ces octets sont représenter en hexa (donc on ajoute 2 caractère à chaque fois)
+        // Ici on place chaque octet lu dans output, sauf que chacun de ces octets sont représenter en hexa (donc on ajoute 2 caractère à chaque fois)
         sprintf(output + (i * 2), "%02x", hash[i]);
     }
     output[HASH_LENGTH] = '\0'; //caractère nul pour la fin de la chaîne.
 }
 
 void computeMD5(const char *input, char *output) {
-    printf("IN COMPUTE MD5\n");
     unsigned char digest[MD5_DIGEST_LENGTH];
     MD5_CTX md5; // Déclaration de la structure de contexte --> Utilisée pour calculer le hachage MD5
 
@@ -36,9 +35,6 @@ void computeMD5(const char *input, char *output) {
     int md5_final = MD5_Final(digest, &md5); // Stockage du résultat dans le tableau 'digest' déclaré plus haut
 
     for (int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-        // On place dans output la représentation hexadécimale de chaque octet contenu dans digest (après le calcul du hachage)
-        // output + (i * 2) signifie que l'on déplace la position d'ajout des caractères de la chaîne digest.
-        // Ici on place chaque octet lu dans output, chacun de ces octets est représenté en hexadécimal (donc on ajoute 2 caractères à chaque fois)
         sprintf(output + (i * 2), "%02x", digest[i]);
     }
     output[MD5_DIGEST_LENGTH] = '\0'; // Caractère nul pour la fin de la chaîne.
@@ -75,7 +71,6 @@ bool generateTable(const char *inputFileName, const char *outputFileName, const 
         entry.hash = strdup(hash); // Place le hash calculé dans entry.hash 
 
         fprintf(outputFile, "%s:%s\n", entry.string, entry.hash);
-        //printf(outputFile, "%s:%s\n", entry.string, entry.hash);
 
         free(entry.string);
         free(entry.hash);
