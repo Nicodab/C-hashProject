@@ -25,8 +25,9 @@ La compilation ayant déjà été un succès, vous trouverez le fichier exécuta
 Mode G: génération de la table de correspondance chaînes-condensats.  
 Depuis un fichier texte *inputFile* contenant des chaînes de caractères, une table de correspondance (T3C) *outputFile* sera crée avec ":" comme séparateur.
 ```bash
-  ./finalproject -G <inputFile> -o <outputFile>
+  ./finalproject -G <inputFile> -o <outputFile> --algo sh256
 ```
+Remarque: On peut spécifier "sha256" ou bien "md5" après l'option --algo. L'application ne supporte que l'algorithme de hashage sha256 et md5. 
 
 Mode L: Lecture de la table de correspondance)  
 Depuis une T3C, le programme construit son arbre binaire.  
@@ -34,8 +35,7 @@ En mode L, une fois que les données du fichier sont chargés en mémoire dans l
 Remarque: Avec l'option *--balanced*, un arbre binaire de recherche équilibré est construit à partir de l'arbre binaire crée lors de la lecture du fichier d'entrée pour le mode L.  
 => Ce mode permet d'améliorer les performances de recherche d'un hash en moyenne.
 ```bash
-  ./finalproject -L <inputFile>
+  ./finalproject -L <inputFile> --balanced
 ```
-
-L'algorithme de chiffrement par défaut est le SHA256.
+Remarque: si il manque l'option --balanced, l'arbre binaire ne sera pas équilibrer et par conséquent le temps de recherche d'un condensat sera un peu plus long en moyenne. 
 
