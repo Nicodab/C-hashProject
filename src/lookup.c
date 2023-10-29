@@ -14,7 +14,6 @@ BinaryTree* loadTable(const char* filename) {
     BinaryTree* tree = NULL; // Initialisation de l'arbre binaire
 
     char line[MAX_LINE_LENGTH];
-    char* token;
 
     printf("Lecture du fichier %s...\n", filename);
     // Parcourir le fichier ligne par ligne

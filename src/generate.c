@@ -61,7 +61,7 @@ bool generateTable(const char *inputFileName, const char *outputFileName, const 
     int compteur=0; // Compteur incrémenté à chaque tour de boucle
 
     while (fgets(line, sizeof(line), inputFile)) {
-        line[strcspn(line, "\n")] = '\0'; //Supprime le caractère de saut de ligneà la fin de chaque ligne lue
+        line[strcspn(line, "\n")] = '\0'; //Supprime le caractère de saut de ligne à la fin de chaque ligne lue
 
         entry.string = strdup(line); // Place la chaîne en claire lue dans entry.string 
         if (strcmp(algo, "sha256") == 0)
